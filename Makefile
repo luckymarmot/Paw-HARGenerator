@@ -19,7 +19,7 @@ build:
 	sh "$(SCRIPTS)/build.sh" $(BASE)
 
 release:
-	sh "$(SCRIPTS)/release.sh" $(BASE)
+	sh "$(SCRIPTS)/release.sh" $(BASE) $(VERSION)
 
 deploy: install build release
 
@@ -29,4 +29,8 @@ transfer:
 # Super commands
 paw-extension: deploy transfer
 
-paw-fast: build release transfer
+paw-fast:
+	$(info build $(VERSION))
+	make build
+	make release
+	make transfer
