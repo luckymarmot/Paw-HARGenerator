@@ -1,6 +1,7 @@
 import {
     registerCodeGenerator,
-    bundle
+    bundle,
+    InputField
 } from './__mocks__/Shims'
 
 @registerCodeGenerator
@@ -13,6 +14,15 @@ export default class Generator {
 
     static languageHighlighter= 'json'
     static fileExtension = 'har'
+
+    static inputs = [
+        new InputField(
+            'onlyLastHTTPExchange',
+            'Use Only Last HTTP Exchange',
+            'Checkbox',
+            { defaultValue: true }
+        )
+    ]
 
     constructor() {
         this.context = null
@@ -60,7 +70,13 @@ export default class Generator {
     }
 
     _createEntriesFromExchanges(request) {
-        let exchanges = request.getAllExchanges() || []
+        let exchanges
+        if (this.onlyLastHTTPExchange) {
+            exchanges = [ request.getLastHTTPExchange() ]
+        }
+        else {
+            exchanges = request.getAllExchanges() || []
+        }
 
         let entries = exchanges.map(exchange => {
             return this._createEntry(exchange)
