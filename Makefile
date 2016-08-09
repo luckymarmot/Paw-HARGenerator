@@ -1,9 +1,23 @@
 BASE=$(shell pwd)
 SCRIPTS=$(BASE)/scripts
 
-# Setup commands
-install:
+all: configure pack
+
+# Install the requirements
+configure:
 	npm install
+
+# Build the ES5 script
+build:
+	sh "$(SCRIPTS)/build.sh" $(BASE)
+
+# Builds a ready-to-deploy ZIP file
+pack: build
+	sh "$(SCRIPTS)/release.sh" $(BASE) $(VERSION)
+
+# Install in Paw extensions folder
+install: build
+	sh "$(SCRIPTS)/transfer.sh" $(BASE)
 
 # Validation commands
 lint:
@@ -12,25 +26,4 @@ lint:
 test:
 	sh "$(SCRIPTS)/test.sh" $(BASE)
 
-validate: lint test
-
-# Build commands
-build:
-	sh "$(SCRIPTS)/build.sh" $(BASE)
-
-release:
-	sh "$(SCRIPTS)/release.sh" $(BASE) $(VERSION)
-
-deploy: install build release
-
-transfer:
-	sh "$(SCRIPTS)/transfer.sh" $(BASE)
-
-# Super commands
-paw-extension: deploy transfer
-
-paw-fast:
-	$(info build $(VERSION))
-	make build
-	make release
-	make transfer
+check: lint test

@@ -37,6 +37,49 @@ export class TestGenerator extends UnitTest {
         this.assertTrue(false)
     }
 
+    @targets('_createLog')
+    _testCreateLog() {}
+
+    @targets('_createCreator')
+    _testCreateLog() {}
+
+    @targets('_createEntries')
+    _testCreateLog() {}
+
+    @targets('_createEntriesFromExchanges')
+    _testCreateLog() {}
+
+    @targets('_createEntry')
+    _testCreateLog() {}
+
+    @targets('_createRequest')
+    _testCreateLog() {}
+
+    @targets('_createCookies')
+    _testCreateLog() {}
+
+    @targets('_createHeaders')
+    _testCreateLog() {}
+
+    @targets('_createQueryString')
+    _testCreateLog() {}
+
+    @targets('_createPostData')
+    _testCreateLog() {}
+
+    @targets('_createParams')
+    _testCreateLog() {}
+
+    @targets('_createResponse')
+    _testCreateLog() {}
+
+    @targets('_createResponseContent')
+    _testCreateLog() {}
+
+    @targets('_createTimings')
+    _testCreateLog() {}
+
+
     __init() {
         const gen = new ClassMock(new Generator())
         return gen

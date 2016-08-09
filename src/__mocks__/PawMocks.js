@@ -86,3 +86,10 @@ export class DynamicString extends Mock {
 export const registerCodeGenerator = (_class) => {
     return _class
 }
+
+export const bundle = {
+    appId: 'com.luckymarmot.Paw',
+    appVersion: '0.0',
+    appBuild: '0000000000',
+    osVersion: '0.0.0'
+}
