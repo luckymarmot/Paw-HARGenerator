@@ -15,28 +15,30 @@ export default class Generator {
     static languageHighlighter= 'json'
     static fileExtension = 'har'
 
+    /*
     static inputs = [
         new InputField(
             'onlyLastHTTPExchange',
-            'Use Only Last HTTP Exchange',
+            'Export Only Last HTTP Exchange',
             'Checkbox',
             { defaultValue: true }
         )
     ]
+    */
 
     constructor() {
         this.context = null
+        this.options = null
     }
 
     // args: context, requests, options
-    /* eslint-disable no-unused-vars */
     generate(context, requests, options) {
         this.context = context
+        this.options = options
 
         let log = this._createLog(requests)
         return JSON.stringify(log, null, '  ')
     }
-    /* eslint-enable no-unused-vars */
 
     _createLog(requests) {
         let log = {
@@ -47,7 +49,7 @@ export default class Generator {
                 (new Date()).toISOString()
         }
 
-        return log
+        return { log: log }
     }
 
     _createCreator() {
@@ -71,7 +73,8 @@ export default class Generator {
 
     _createEntriesFromExchanges(request) {
         let exchanges
-        if (this.onlyLastHTTPExchange) {
+        console.log('@options', JSON.stringify(this.options))
+        if (this.options.onlyLastHTTPExchange) {
             exchanges = [ request.getLastHTTPExchange() ]
         }
         else {
