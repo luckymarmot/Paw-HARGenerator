@@ -15,7 +15,6 @@ export default class Generator {
     static languageHighlighter= 'json'
     static fileExtension = 'har'
 
-    /*
     static inputs = [
         new InputField(
             'onlyLastHTTPExchange',
@@ -24,7 +23,6 @@ export default class Generator {
             { defaultValue: true }
         )
     ]
-    */
 
     constructor() {
         this.context = null
@@ -73,7 +71,6 @@ export default class Generator {
 
     _createEntriesFromExchanges(request) {
         let exchanges
-        console.log('@options', JSON.stringify(this.options))
         if (this.options.onlyLastHTTPExchange) {
             exchanges = [ request.getLastHTTPExchange() ]
         }
@@ -225,6 +222,8 @@ export default class Generator {
         let contentType = exchange.getRequestHeaderByName('Content-Type')
 
         if (
+            contentType &&
+            typeof contentType === 'string' &&
             contentType.startsWith('application/x-www-form-urlencoded')
         ) {
             return {
