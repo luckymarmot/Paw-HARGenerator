@@ -224,7 +224,7 @@ export default class Generator {
         if (
             contentType &&
             typeof contentType === 'string' &&
-            contentType.startsWith('application/x-www-form-urlencoded')
+            contentType.indexOf('application/x-www-form-urlencoded') === 0
         ) {
             return {
                 mimeType: contentType,
